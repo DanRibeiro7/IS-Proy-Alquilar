@@ -24,6 +24,8 @@
             <tr>
                 <td>{{ $peli->PelNombre }}</td>
                 <td>{{ $peli->PelTipo }}</td>
+                <td>{{ $peli->PelStock > 0 ? 'Sí' : 'No' }} ({{ $peli->PelStock }})</td>
+
                 <td>S/. {{ number_format($peli->PelCosto, 2) }}</td>
                 <td>
                     <form action="{{ route('peliculas.alquilar', $peli->PelID) }}" method="POST">

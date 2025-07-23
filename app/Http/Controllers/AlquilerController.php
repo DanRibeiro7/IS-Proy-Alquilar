@@ -24,8 +24,12 @@ class AlquilerController extends Controller
 {
     $usuario = session('usuario');
 
-    // Buscar la película por ID
     $pelicula = Pelicula::findOrFail($id);
+
+    // Verificar stock
+    if ($pelicula->PelStock <= 0) {
+        return redirect()->route('peliculas.index')->with('mensaje', 'No hay stock disponible para esta película.');
+    }
 
     // Verificar saldo
     if ($usuario->UsuSaldo < $pelicula->PelPrecio) {
@@ -43,11 +47,14 @@ class AlquilerController extends Controller
     // Descontar saldo
     $usuario->UsuSaldo -= $pelicula->PelPrecio;
     $usuario->save();
-
-    // Actualizar sesión
     session(['usuario' => $usuario]);
+
+    // Descontar stock
+    $pelicula->PelStock -= 1;
+    $pelicula->save();
 
     return redirect()->route('menu')->with('mensaje', 'Película alquilada correctamente.');
 }
+
 
 }

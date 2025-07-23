@@ -10,7 +10,8 @@ class Pelicula extends Model
     protected $primaryKey = 'PelID';
     public $timestamps = false;
 
-    protected $fillable = ['PelNombre', 'PelTipo', 'PelDuracion', 'PelCosto'];
+   protected $fillable = ['PelNombre', 'PelTipo', 'PelDuracion', 'PelCosto', 'PelStock'];
+
 
     public function alquileres()
     {
